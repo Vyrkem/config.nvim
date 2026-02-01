@@ -1,26 +1,26 @@
 return {
   {
     'williamboman/mason.nvim',
-    opts = function(_, opts)
-      opts.ensure_installed = opts.ensure_installed or {}
-      vim.list_extend(opts.ensure_installed, {
+    opts = {
+      ensure_installed = {
         'pyright',
         'clangd',
         'rust-analyzer',
         'zls',
-      })
-    end,
+      },
+    },
   },
 
   {
     'neovim/nvim-lspconfig',
-    opts = {
-      servers = {
-        pyright = {},
-        clangd = {},
-        rust_analyzer = {},
-        zls = {},
-      },
-    },
+    config = function()
+      -- Neovim 0.11+ : utilise vim.lsp.config au lieu de require('lspconfig')
+      vim.lsp.config('pyright', {})
+      vim.lsp.config('clangd', {})
+      vim.lsp.config('zls', {})
+      -- rust_analyzer géré par rustaceanvim
+
+      vim.lsp.enable({ 'pyright', 'clangd', 'zls' })
+    end,
   },
 }
