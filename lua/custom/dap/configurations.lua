@@ -19,3 +19,29 @@ dap.configurations.c = {
 }
 
 dap.configurations.cpp = dap.configurations.c
+
+dap.adapters.probe_rs = {
+  type = 'server',
+  port = '${port}',
+  executable = {
+    command = 'probe-rs',
+    args = { 'dap-server', '--port', '${port}' },
+  },
+}
+
+dap.configurations.rust = {
+  {
+    name = 'Debug ESP32-S3',
+    type = 'probe_rs',
+    request = 'launch',
+    chip = 'esp32s3',
+    coreConfigs = {
+      {
+        programBinary = 'target/xtensa-esp32s3-none-elf/debug/qr-box-s3',
+      },
+    },
+    flashingConfig = {
+      flashingEnabled = true,
+    },
+  },
+}

@@ -2,7 +2,7 @@ return {
   {
     'mrcjkb/rustaceanvim',
     version = '^5', -- Recommended to avoid breaking changes
-    lazy = false,   -- Plugin is already lazy-loaded on rust filetype
+    lazy = false, -- Plugin is already lazy-loaded on rust filetype
     ft = { 'rust' },
     init = function()
       vim.g.rustaceanvim = {
@@ -16,29 +16,29 @@ return {
           on_attach = function(client, bufnr)
             local opts = { buffer = bufnr, silent = true }
             vim.keymap.set('n', '<leader>ca', function()
-              vim.cmd.RustLsp('codeAction')
+              vim.cmd.RustLsp 'codeAction'
             end, vim.tbl_extend('force', opts, { desc = 'Rust Code Action' }))
             vim.keymap.set('n', '<leader>rr', function()
-              vim.cmd.RustLsp('runnables')
+              vim.cmd.RustLsp 'runnables'
             end, vim.tbl_extend('force', opts, { desc = 'Rust Runnables' }))
             vim.keymap.set('n', '<leader>re', function()
-              vim.cmd.RustLsp('expandMacro')
+              vim.cmd.RustLsp 'expandMacro'
             end, vim.tbl_extend('force', opts, { desc = 'Expand Macro' }))
             vim.keymap.set('n', 'K', function()
-              vim.cmd.RustLsp({ 'hover', 'actions' })
+              vim.cmd.RustLsp { 'hover', 'actions' }
             end, vim.tbl_extend('force', opts, { desc = 'Rust Hover Actions' }))
             vim.keymap.set('n', '<leader>rd', function()
-              vim.cmd.RustLsp('renderDiagnostic')
+              vim.cmd.RustLsp 'renderDiagnostic'
             end, vim.tbl_extend('force', opts, { desc = 'Rust Render Diagnostic (overlay)' }))
 
             -- Toggle virtual lines pour les diagnostics (affichage sous les lignes)
-            local virtual_lines_enabled = false
+            local virtual_lines_enabled = true
             vim.keymap.set('n', '<leader>rl', function()
               virtual_lines_enabled = not virtual_lines_enabled
-              vim.diagnostic.config({
+              vim.diagnostic.config {
                 virtual_lines = virtual_lines_enabled,
                 virtual_text = not virtual_lines_enabled,
-              })
+              }
               vim.notify('Diagnostic virtual lines: ' .. (virtual_lines_enabled and 'ON' or 'OFF'))
             end, vim.tbl_extend('force', opts, { desc = 'Toggle Diagnostic Virtual Lines' }))
 
