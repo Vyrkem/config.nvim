@@ -27,6 +27,20 @@ return {
             vim.keymap.set('n', 'K', function()
               vim.cmd.RustLsp({ 'hover', 'actions' })
             end, vim.tbl_extend('force', opts, { desc = 'Rust Hover Actions' }))
+            vim.keymap.set('n', '<leader>rd', function()
+              vim.cmd.RustLsp('renderDiagnostic')
+            end, vim.tbl_extend('force', opts, { desc = 'Rust Render Diagnostic (overlay)' }))
+
+            -- Toggle virtual lines pour les diagnostics (affichage sous les lignes)
+            local virtual_lines_enabled = false
+            vim.keymap.set('n', '<leader>rl', function()
+              virtual_lines_enabled = not virtual_lines_enabled
+              vim.diagnostic.config({
+                virtual_lines = virtual_lines_enabled,
+                virtual_text = not virtual_lines_enabled,
+              })
+              vim.notify('Diagnostic virtual lines: ' .. (virtual_lines_enabled and 'ON' or 'OFF'))
+            end, vim.tbl_extend('force', opts, { desc = 'Toggle Diagnostic Virtual Lines' }))
 
             -- Enable inlay hints for this buffer
             vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
