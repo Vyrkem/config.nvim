@@ -17,7 +17,15 @@ return {
     config = function()
       -- Neovim 0.11+ : utilise vim.lsp.config au lieu de require('lspconfig')
       vim.lsp.config('pyright', {})
-      vim.lsp.config('clangd', {})
+      -- --query-driver : clangd demande ses chemins système au compilateur croisé
+      -- (Xtensa du SDK Zephyr, toolchains PlatformIO) au lieu d'utiliser ceux du PC
+      vim.lsp.config('clangd', {
+        cmd = {
+          'clangd',
+          '--query-driver=' .. vim.fn.expand '~' .. '/zephyrproject/zephyr-sdk-*/gnu/*/bin/*-gcc,'
+            .. vim.fn.expand '~' .. '/.platformio/packages/toolchain-*/bin/*-gcc',
+        },
+      })
       vim.lsp.config('zls', {})
       vim.lsp.config('slint_lsp', {})
       -- rust_analyzer géré par rustaceanvim

@@ -671,7 +671,15 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
+        -- --query-driver : chemins système du compilateur croisé (Xtensa Zephyr, PlatformIO).
+        -- Même valeur que dans lua/custom/plugins/lsp-server.lua, pour que l'ordre de chargement n'importe pas.
+        clangd = {
+          cmd = {
+            'clangd',
+            '--query-driver=' .. vim.fn.expand '~' .. '/zephyrproject/zephyr-sdk-*/gnu/*/bin/*-gcc,'
+              .. vim.fn.expand '~' .. '/.platformio/packages/toolchain-*/bin/*-gcc',
+          },
+        },
         -- gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
