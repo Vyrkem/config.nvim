@@ -36,7 +36,11 @@ return {
         end,
       })
 
-      vim.lsp.enable({ 'pyright', 'clangd', 'zls', 'slint_lsp', 'svlangserver', 'verible' })
+      vim.lsp.config('lua_ls', {
+        settings = { Lua = { completion = { callSnippet = 'Replace' } } },
+      })
+
+      vim.lsp.enable({ 'pyright', 'clangd', 'zls', 'slint_lsp', 'svlangserver', 'verible', 'lua_ls' })
 
       vim.diagnostic.config {
         severity_sort = true,
